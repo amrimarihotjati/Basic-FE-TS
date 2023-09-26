@@ -18,9 +18,21 @@ export default class App extends React.Component<{ value?: string }, State> {
     };
   }
 
+  // lifecycle
   componentDidMount() {
     this.fetchData();
+    console.log("Mounted");
   }
+
+  componentDidUpdate() {
+    console.log("Updated");
+  }
+
+  componentWillUnmount() {
+    alert("Fetching data has been added successfully.");
+    console.log("Unmounted");
+  }
+  // end of lifecycle
 
   fetchData() {
     fetch("https://jsonplaceholder.typicode.com/users")
