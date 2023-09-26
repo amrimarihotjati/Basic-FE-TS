@@ -1,28 +1,27 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-type State = {
-  name: string;
+
+interface FormState{
+  nama: string;
+  umur: number;
+  alamat: string;
 }
 
-export default class App extends Component {
-  state: State = {
-    name: "Amri"
-  }
+interface PriceState {
+  price: number;
+}
 
-  updateName = () => {
-    this.setState({
-      name: "Guswandi"
-    })
+export default class App extends React.Component<PriceState, FormState>{
+
+  public static defaultProps = {
+    price: 23000,
   }
 
   render(){
     return(
       <React.Fragment>
-        <div>{this.state.name}</div>
-
-        <button onClick={this.updateName}>Manipulate</button>
+        <div>{App.defaultProps.price}</div>
       </React.Fragment>
     )
   }
-
 }
