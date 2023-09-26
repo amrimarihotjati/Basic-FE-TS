@@ -1,30 +1,28 @@
-import React from "react";
-import Test from "./Test";
-import Dukungan from "./components/Dukungan";
+import React, {Component} from 'react';
 
+type State = {
+  name: string;
+}
 
-class App extends React.Component{
-  
+export default class App extends Component {
+  state: State = {
+    name: "Amri"
+  }
+
+  updateName = () => {
+    this.setState({
+      name: "Guswandi"
+    })
+  }
+
   render(){
     return(
       <React.Fragment>
-        <h1>Bismillah</h1>
-        <Test/>
-        <AnotherComponent/>
-        <Dukungan/>
+        <div>{this.state.name}</div>
+
+        <button onClick={this.updateName}>Manipulate</button>
       </React.Fragment>
     )
   }
 
 }
-
-class AnotherComponent extends React.Component{
-  render(){
-    return(
-      <h1>Ini dari komponen lain</h1>
-    )
-  }
-}
-
-
-export default App;
