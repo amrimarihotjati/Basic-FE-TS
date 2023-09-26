@@ -1,27 +1,58 @@
-import React from 'react';
+import React from "react";
 
-
-interface FormState{
-  nama: string;
-  umur: number;
-  alamat: string;
+interface Data {
+  name: string;
+  username: string;
+  email: string;
 }
 
-interface PriceState {
-  price: number;
+interface State {
+  data: Data[] | null;
 }
 
-export default class App extends React.Component<PriceState, FormState>{
-
-  public static defaultProps = {
-    price: 23000,
+export default class App extends React.Component<{ value?: string }, State> {
+  constructor(props: { value: "" }) {
+    super(props);
+    this.state = {
+      data: null,
+    };
   }
 
-  render(){
-    return(
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const dataArray = Array.isArray(data) ? data : [data];
+        this.setState({ data: dataArray });
+      })
+      .catch((error) => {
+        alert(`Error fetching: ${error}`);
+      });
+  }
+
+  render() {
+    const { data } = this.state;
+
+    return (
       <React.Fragment>
-        <div>{App.defaultProps.price}</div>
+        <div>
+          {data &&
+            data.map((data) => (
+              <div>
+                <h1>{data?.name}</h1>
+                <h3>{data?.username}</h3>
+                <p>{data?.email}</p>
+                <hr />
+              </div>
+            ))}
+        </div>
       </React.Fragment>
-    )
+    );
   }
 }
