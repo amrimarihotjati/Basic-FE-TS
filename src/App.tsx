@@ -1,69 +1,25 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-interface Data {
-  name: string;
-  username: string;
-  email: string;
-}
+import Home from "./pages/Home";
+import Components from "./pages/Component";
+import UseState from "./pages/State";
+import Props from "./pages/Props";
+import FetchAPI from "./pages/FetchAPI";
 
-interface State {
-  data: Data[] | null;
-}
-
-export default class App extends React.Component<{ value?: string }, State> {
-  constructor(props: { value: "" }) {
-    super(props);
-    this.state = {
-      data: null,
-    };
-  }
-
-  // lifecycle
-  componentDidMount() {
-    this.fetchData();
-    console.log("Mounted");
-  }
-
-  componentDidUpdate() {
-    console.log("Updated");
-  }
-
-  componentWillUnmount() {
-    alert("Fetching data has been added successfully.");
-    console.log("Unmounted");
-  }
-  // end of lifecycle
-
-  fetchData() {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const dataArray = Array.isArray(data) ? data : [data];
-        this.setState({ data: dataArray });
-      })
-      .catch((error) => {
-        alert(`Error fetching: ${error}`);
-      });
-  }
-
+export default class App extends React.Component {
   render() {
-    const { data } = this.state;
-
     return (
       <React.Fragment>
-        <div>
-          {data &&
-            data.map((data) => (
-              <div>
-                <h1>{data?.name}</h1>
-                <h3>{data?.username}</h3>
-                <p>{data?.email}</p>
-                <hr />
-              </div>
-            ))}
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/components" element={<Components />} />
+            <Route path="/state" element={<UseState />} />
+            <Route path="/props" element={<Props />} />
+            <Route path="/fetch-api/:id" element={<FetchAPI />} />
+          </Routes>
+        </BrowserRouter>
       </React.Fragment>
     );
   }
