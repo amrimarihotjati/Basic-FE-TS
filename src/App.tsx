@@ -6,6 +6,7 @@ import Components from "./pages/Component";
 import UseState from "./pages/State";
 import Props from "./pages/Props";
 import FetchAPI from "./pages/FetchAPI";
+import PrivateRoute from "./components/PrivateRoutes";
 
 export default class App extends React.Component {
   render() {
@@ -14,10 +15,12 @@ export default class App extends React.Component {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/components" element={<Components />} />
-            <Route path="/state" element={<UseState />} />
-            <Route path="/props" element={<Props />} />
-            <Route path="/fetch-api/:id" element={<FetchAPI />} />
+            <Route element={<PrivateRoute/>}>
+              <Route path="/components" element={<Components />} />
+              <Route path="/state" element={<UseState />} />
+              <Route path="/props" element={<Props />} />
+              <Route path="/fetch-api/:id" element={<FetchAPI />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </React.Fragment>
